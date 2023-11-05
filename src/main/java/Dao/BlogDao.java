@@ -1,13 +1,15 @@
 package Dao;
-import java.sql.Connection;
+
 import model.Blog;
 import model.DBUtil;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 public class BlogDao {
     // 1. 向博客列表中插入一个博客
     public void insert(Blog blog) throws SQLException {
@@ -35,7 +37,7 @@ public class BlogDao {
     }
     // 2. 能够获取到博客表中的所有博客的信息 (用于在博客列表页, 此处每篇博客不一定会获取到完整的正文)
     public List<Blog> selectAll() throws SQLException {
-        List<Blog>blogs=new ArrayList<>();
+        List<Blog>blogs = new ArrayList<>();
         Connection connection=null;
         PreparedStatement statement=null;
         ResultSet resultSet=null;
@@ -69,7 +71,7 @@ public class BlogDao {
         ResultSet resultSet=null;
         try {
             connection=DBUtil.getConnection();
-            String sql="select * from blog where blogId=?";
+            String sql="select * from blog where id=?";
             statement=connection.prepareStatement(sql);
             statement.setInt(1,blogId);
             resultSet=statement.executeQuery();
@@ -96,7 +98,7 @@ public class BlogDao {
         PreparedStatement statement=null;
         try {
             connection=DBUtil.getConnection();
-            String sql="delete from blog where blogId=?";
+            String sql="delete from blog where id=?";
             statement.setInt(1,blogId);
             statement.executeUpdate();
         } catch (SQLException e) {

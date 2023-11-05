@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Blog;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import java.util.Random;
 public class Rand extends HttpServlet{
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int num = Integer.parseInt(req.getParameter("number"));
 
         BlogDao blogDao = new BlogDao();
@@ -46,7 +45,9 @@ public class Rand extends HttpServlet{
                     arrayNode.add(json);
                 }
             }
-            resp.getWriter().write(String.valueOf(outputJson));
+            String respJson = objectMapper.writeValueAsString(outputJson);
+            resp.setContentType("application/json;charset=utf8");
+            resp.getWriter().write(respJson);
             resp.setStatus(200);
         } catch (SQLException e) {
             e.printStackTrace();
