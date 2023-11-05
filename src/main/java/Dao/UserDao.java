@@ -9,11 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 public class UserDao {
-    //根据用户名获取用户密码
-    public User getPassword(String username) throws SQLException {
+    //根据用户名获取用户信息
+    public User getUser(String username) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         User user = new User();
         user.setUserId(-1);
         try {
@@ -23,8 +23,12 @@ public class UserDao {
             statement.setString(1, username);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
-                user.setUserId(resultSet.getInt("userid"));
+                user.setUserId(resultSet.getInt("id"));
+                user.setUserName(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                user.setRegisterTime(resultSet.getTimestamp("registerTime"));
+                user.setAdmin(resultSet.getBoolean("isAdmin"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,5 +39,23 @@ public class UserDao {
             return user;
         else
             return null;
+    }
+
+    public void insert(User user) throws SQLException {
+        Connection connection=null;
+        PreparedStatement statement=null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "insert into user values(null, ?, ?, ?, 0, now())";
+            statement=connection.prepareStatement(sql);
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(connection,statement,null);
+        }
     }
 }

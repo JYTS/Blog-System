@@ -27,7 +27,7 @@ public class BlogServlet extends HttpServlet {
         //将blogs转成json格式
         String respJson=objectMapper.writeValueAsString(blogs);
         resp.setContentType("application/json;charset=utf8");
-        resp.getWriter().write(respJson);
         resp.setStatus(200);
+        resp.getWriter().write(respJson);
     }
 }
