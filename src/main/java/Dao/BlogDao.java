@@ -76,7 +76,7 @@ public class BlogDao {
             //由于id是唯一的，要么是0条，要么是唯一的，是主键作为查询条件的，所以直接用if
             if (resultSet.next()){
                 Blog blog=new Blog();
-                blog.setBlogId(resultSet.getInt("blogId"));
+                blog.setBlogId(resultSet.getInt("id"));
                 blog.setTitle(resultSet.getString("title"));
                 blog.setContent(resultSet.getString("content"));
                 blog.setUserId(resultSet.getInt("userId"));

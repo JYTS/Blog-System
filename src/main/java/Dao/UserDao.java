@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class UserDao {
     //根据用户名获取用户信息
-    public User getUser(String username) throws SQLException {
+    public User selectOne(String username) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet;
@@ -21,6 +21,36 @@ public class UserDao {
             String sql = "select password from user where username = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, username);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                user.setUserId(resultSet.getInt("id"));
+                user.setUserName(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail(resultSet.getString("email"));
+                user.setRegisterTime(resultSet.getTimestamp("registerTime"));
+                user.setAdmin(resultSet.getBoolean("isAdmin"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(connection,statement,null);
+        }
+        if (user.getUserId() != -1)
+            return user;
+        else
+            return null;
+    }
+    public User selectOne(int userId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        User user = new User();
+        user.setUserId(-1);
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select password from user where id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
                 user.setUserId(resultSet.getInt("id"));

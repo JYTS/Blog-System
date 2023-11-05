@@ -11,28 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/user/register")
-public class UserRegisterServlet extends HttpServlet{
+@WebServlet("/user/login")
+public class Login extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("username");
-        String pwd = req.getParameter("password");
-        String email = req.getParameter("email");
+        String loginName = req.getParameter("username");
+        String loginPwd = req.getParameter("password");
 
         UserDao userDao = new UserDao();
         try {
-            User user = userDao.getUser(name);
-            if (user == null) {
-                user = new User();
-                user.setUserName(name);
-                user.setPassword(pwd);
-                user.setEmail(email);
-                try {
-                    userDao.insert(user);
+            User user = userDao.selectOne(loginName);
+            if (user != null) {
+                if (loginPwd.equals(user.getPassword())) {
                     resp.setStatus(200);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    resp.setStatus(101);
+                } else {
+                    resp.setStatus(103);
                 }
             } else {
                 resp.setStatus(102);
