@@ -1,7 +1,7 @@
-package controller;
+package Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Blog;
-import model.BlogDao;
+import Dao.BlogDao;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,24 +9,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
-@WebServlet("/blog")
-public class BlogServlet extends HttpServlet {
+import java.sql.Timestamp;
+
+@WebServlet("/insert")
+public class TestInsert extends HttpServlet {
     private ObjectMapper objectMapper=new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //从数据库中查询到博客列表，转成json格式，直接返回
-        //查询数据库
+
         BlogDao blogDao=new BlogDao();
-        List<Blog> blogs= null;
+        Blog blog = new Blog();
+        blog.setBlogId(1);
+        blog.setContent("你好");
+        blog.setTitle("测试博客");
+        blog.setUserId(1);
+        blog.setPostTime(Timestamp.valueOf("2023-10-17 2:18:13"));
         try {
-            blogs = blogDao.selectAll();
+            blogDao.insert(blog);
+            resp.getWriter().write("succeed");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //将blogs转成json格式
-        String respJson=objectMapper.writeValueAsString(blogs);
-        resp.setContentType("application/json;charset=utf8");
-        resp.getWriter().write(respJson);
     }
 }

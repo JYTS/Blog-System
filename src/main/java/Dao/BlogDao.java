@@ -1,11 +1,13 @@
-package model;
-import com.mysql.jdbc.Connection;
+package Dao;
+import java.sql.Connection;
+import model.Blog;
+import model.DBUtil;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-// 这个类用于去封装博客表的基本操作
 public class BlogDao {
     // 1. 向博客列表中插入一个博客
     public void insert(Blog blog) throws SQLException {
