@@ -1,4 +1,4 @@
-package Servlet;
+package Servlet.Blog;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Blog;
 import Dao.BlogDao;
