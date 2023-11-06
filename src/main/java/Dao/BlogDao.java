@@ -25,7 +25,7 @@ public class BlogDao {
             //第一个参数表示的是第几个？的位置
             statement.setString(1, blog.getTitle());
             statement.setString(2, blog.getContent());
-            statement.setInt(3,blog.getUserId());
+            statement.setInt(3, blog.getUserId());
             // ③执行 SQL
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -51,7 +51,6 @@ public class BlogDao {
                 Blog blog = new Blog();
                 blog.setBlogId(resultSet.getInt("id"));
                 blog.setTitle(resultSet.getString("title"));
-                blog.setContent(resultSet.getString("content"));
                 blog.setUserId(resultSet.getInt("userId"));
                 blog.setPostTime(resultSet.getTimestamp("postTime"));
                 blogs.add(blog);
@@ -63,7 +62,6 @@ public class BlogDao {
         }
         return blogs;
     }
-
     // 3. 能够根据博客 id 获取到指定的博客内容 (用于在博客详情页)
     public Blog selectOne(int blogId) throws SQLException {
         Connection connection = null;
@@ -73,7 +71,7 @@ public class BlogDao {
             connection = DBUtil.getConnection();
             String sql = "select * from blog where id=?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1,blogId);
+            statement.setInt(1, blogId);
             resultSet = statement.executeQuery();
             //由于id是唯一的，要么是0条，要么是唯一的，是主键作为查询条件的，所以直接用if
             if (resultSet.next()){
@@ -109,4 +107,31 @@ public class BlogDao {
         }
     }
     // 注意, 上述操作是 增删查, 没有改
+
+    public List<Blog> selectFromUserId(int userId) throws SQLException {
+        List<Blog>blogs = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select * from blog where userId=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                Blog blog = new Blog();
+                blog.setBlogId(resultSet.getInt("id"));
+                blog.setTitle(resultSet.getString("title"));
+                blog.setUserId(resultSet.getInt("userId"));
+                blog.setPostTime(resultSet.getTimestamp("postTime"));
+                blogs.add(blog);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(connection,statement,resultSet);
+        }
+        return blogs;
+    }
 }

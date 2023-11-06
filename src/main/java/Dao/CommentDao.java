@@ -15,7 +15,6 @@ public class CommentDao {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        Comment comment = null;
         try {
             connection = DBUtil.getConnection();
             String sql = "select * from comment where id = ?";
@@ -23,19 +22,20 @@ public class CommentDao {
             statement.setInt(1, commentId);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
-                comment = new Comment();
+                Comment comment = new Comment();
                 comment.setCommentId(resultSet.getInt("id"));
                 comment.setBlogId(resultSet.getInt("blogId"));
                 comment.setUserId(resultSet.getInt("userId"));
                 comment.setContent(resultSet.getString("content"));
                 comment.setDatetime(resultSet.getTimestamp("datetime"));
+                return comment;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.close(connection, statement,resultSet );
         }
-        return comment;
+        return null;
     }
 
     public List<Comment> selectFromBlog(int blogId) throws SQLException {

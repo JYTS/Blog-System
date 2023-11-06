@@ -16,8 +16,6 @@ public class UserDao {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet;
-        User user = new User();
-        user.setUserId(-1);
         try {
             connection = DBUtil.getConnection();
             String sql = "select password from user where username = ?";
@@ -25,29 +23,27 @@ public class UserDao {
             statement.setString(1, username);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
+                User user = new User();
                 user.setUserId(resultSet.getInt("id"));
                 user.setUserName(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setRegisterTime(resultSet.getTimestamp("registerTime"));
                 user.setAdmin(resultSet.getBoolean("isAdmin"));
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(connection,statement,null);
         }
-        if (user.getUserId() != -1)
-            return user;
-        else
-            return null;
+        return null;
     }
+
     public User selectOne(int userId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet;
-        User user = new User();
-        user.setUserId(-1);
         try {
             connection = DBUtil.getConnection();
             String sql = "select password from user where id = ?";
@@ -55,22 +51,21 @@ public class UserDao {
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
+                User user = new User();
                 user.setUserId(resultSet.getInt("id"));
                 user.setUserName(resultSet.getString("username"));
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setRegisterTime(resultSet.getTimestamp("registerTime"));
                 user.setAdmin(resultSet.getBoolean("isAdmin"));
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBUtil.close(connection,statement,null);
         }
-        if (user.getUserId() != -1)
-            return user;
-        else
-            return null;
+        return null;
     }
 
     public void insert(User user) throws SQLException {

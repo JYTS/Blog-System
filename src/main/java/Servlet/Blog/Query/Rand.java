@@ -1,4 +1,4 @@
-package Servlet.Blog.Blog;
+package Servlet.Blog.Query;
 
 import Dao.BlogDao;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-@WebServlet("/blog/rand")
+@WebServlet("/query/rand")
 public class Rand extends HttpServlet{
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
@@ -27,7 +27,7 @@ public class Rand extends HttpServlet{
         try {
             List<Blog> blogs= blogDao.selectAll();
             ObjectNode outputJson = JsonNodeFactory.instance.objectNode();
-            ArrayNode arrayNode = outputJson.putArray("blogid");
+            ArrayNode arrayNode = outputJson.putArray("blogs");
             if (num < blogs.size()) {
                 Random random = new Random();
                 for (; num>0; num--){
@@ -35,12 +35,14 @@ public class Rand extends HttpServlet{
                     Blog blog = blogs.get(randomIndex);
                     ObjectNode json = JsonNodeFactory.instance.objectNode();
                     json.put("id", blog.getBlogId());
+                    json.put("title", blog.getTitle());
                     arrayNode.add(json);
                 }
             } else {
                 for (Blog blog : blogs) {
                     ObjectNode json = JsonNodeFactory.instance.objectNode();
                     json.put("id", blog.getBlogId());
+                    json.put("title", blog.getTitle());
                     arrayNode.add(json);
                 }
             }
