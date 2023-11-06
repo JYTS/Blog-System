@@ -18,14 +18,8 @@ public class Delete extends HttpServlet{
         try {
             Blog blog = blogDao.selectOne(id);
             if (blog != null) {
-                try {
-                    blogDao.delete(id);
-                    resp.setStatus(200);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    resp.setStatus(101);
-                }
-
+                blogDao.delete(id);
+                resp.setStatus(200);
             } else {
                 resp.setStatus(104);
             }

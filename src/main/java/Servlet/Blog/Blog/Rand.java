@@ -29,7 +29,6 @@ public class Rand extends HttpServlet{
             ObjectNode outputJson = JsonNodeFactory.instance.objectNode();
             ArrayNode arrayNode = outputJson.putArray("blogid");
             if (num < blogs.size()) {
-                int size = blogs.size();
                 Random random = new Random();
                 for (; num>0; num--){
                     int randomIndex = random.nextInt(blogs.size());

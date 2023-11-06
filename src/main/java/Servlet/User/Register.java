@@ -25,13 +25,8 @@ public class Register extends HttpServlet{
                 user.setUserName(name);
                 user.setPassword(pwd);
                 user.setEmail(email);
-                try {
-                    userDao.insert(user);
-                    resp.setStatus(200);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    resp.setStatus(101);
-                }
+                userDao.insert(user);
+                resp.setStatus(200);
             } else {
                 resp.setStatus(102);
             }

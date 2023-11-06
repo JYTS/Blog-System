@@ -25,17 +25,12 @@ public class Insert extends HttpServlet{
         try {
             User user = userDao.selectOne(username);
             if (user != null) {
-                try {
-                    Blog blog = new Blog();
-                    blog.setTitle(title);
-                    blog.setContent("");
-                    blog.setUserId(user.getUserId());
-                    blogDao.insert(blog);
-                    resp.setStatus(200);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    resp.setStatus(101);
-                }
+                Blog blog = new Blog();
+                blog.setTitle(title);
+                blog.setContent("");
+                blog.setUserId(user.getUserId());
+                blogDao.insert(blog);
+                resp.setStatus(200);
             } else {
                 resp.setStatus(102);
             }
