@@ -64,6 +64,33 @@ public class TagDao {
         return tags;
     }
 
+    public List<Tag> selectFromName(String name) throws SQLException {
+        List<Tag> tags = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select * from tag where name=?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            resultSet = statement.executeQuery();
+            //遍历整个集合
+            while(resultSet.next()){
+                Tag tag = new Tag();
+                tag.setTagId(resultSet.getInt("id"));
+                tag.setBlogId(resultSet.getInt("blogId"));
+                tag.setName(resultSet.getString("name"));
+                tags.add(tag);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(connection, statement,resultSet );
+        }
+        return tags;
+    }
+
     public void insert(Tag tag) throws SQLException {
         Connection connection=null;
         PreparedStatement statement=null;

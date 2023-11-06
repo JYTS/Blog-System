@@ -43,7 +43,7 @@ public class BlogDao {
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from blog";
+            String sql = "select id, title, userId, postTime from blog";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             //遍历整个集合
@@ -115,7 +115,7 @@ public class BlogDao {
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from blog where userId=?";
+            String sql = "select id, title, userId, postTime from blog where userId=?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
@@ -133,5 +133,32 @@ public class BlogDao {
             DBUtil.close(connection,statement,resultSet);
         }
         return blogs;
+    }
+
+    public Blog selectOneInfo(int blogId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select id, title, userId, postTime from blog where id=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, blogId);
+            resultSet = statement.executeQuery();
+            //由于id是唯一的，要么是0条，要么是唯一的，是主键作为查询条件的，所以直接用if
+            if (resultSet.next()){
+                Blog blog = new Blog();
+                blog.setBlogId(resultSet.getInt("id"));
+                blog.setTitle(resultSet.getString("title"));
+                blog.setUserId(resultSet.getInt("userId"));
+                blog.setPostTime(resultSet.getTimestamp("postTime"));
+                return blog;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(connection,statement,resultSet);
+        }
+        return null;
     }
 }
