@@ -19,8 +19,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/comment/info")
-public class Info extends HttpServlet{
+@WebServlet("/comment/getComments")
+public class Gets extends HttpServlet{
     private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

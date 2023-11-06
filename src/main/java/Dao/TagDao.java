@@ -1,6 +1,6 @@
 package Dao;
 
-import model.Comment;
+import model.Tag;
 import model.DBUtil;
 
 import java.sql.Connection;
@@ -10,25 +10,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentDao {
-    public Comment selectOne(int commentId) throws SQLException {
+public class TagDao {
+    public Tag selectOne(int blogId, String name) throws SQLException{
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from comment where id = ?";
+            String sql = "select * from tag where blogId=? and name=?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, commentId);
+            statement.setInt(1, blogId);
+            statement.setString(2, name);
             resultSet = statement.executeQuery();
             if (resultSet.next()){
-                Comment comment = new Comment();
-                comment.setCommentId(resultSet.getInt("id"));
-                comment.setBlogId(resultSet.getInt("blogId"));
-                comment.setUserId(resultSet.getInt("userId"));
-                comment.setContent(resultSet.getString("content"));
-                comment.setDatetime(resultSet.getTimestamp("datetime"));
-                return comment;
+                Tag tag = new Tag();
+                tag.setTagId(resultSet.getInt("id"));
+                tag.setBlogId(resultSet.getInt("blogId"));
+                tag.setName(resultSet.getString("name"));
+                return tag;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,45 +37,42 @@ public class CommentDao {
         return null;
     }
 
-    public List<Comment> selectFromBlog(int blogId) throws SQLException {
-        List<Comment> comments = new ArrayList<>();
+    public List<Tag> selectFromBlog(int blogId) throws SQLException {
+        List<Tag> tags = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select * from comment where blogId=?";
+            String sql = "select * from tag where blogId=?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, blogId);
             resultSet = statement.executeQuery();
             //遍历整个集合
             while(resultSet.next()){
-                Comment comment = new Comment();
-                comment.setCommentId(resultSet.getInt("id"));
-                comment.setBlogId(resultSet.getInt("blogId"));
-                comment.setUserId(resultSet.getInt("userId"));
-                comment.setContent(resultSet.getString("content"));
-                comment.setDatetime(resultSet.getTimestamp("datetime"));
-                comments.add(comment);
+                Tag tag = new Tag();
+                tag.setTagId(resultSet.getInt("id"));
+                tag.setBlogId(resultSet.getInt("blogId"));
+                tag.setName(resultSet.getString("name"));
+                tags.add(tag);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
             DBUtil.close(connection, statement,resultSet );
         }
-        return comments;
+        return tags;
     }
 
-    public void insert(Comment comment) throws SQLException {
+    public void insert(Tag tag) throws SQLException {
         Connection connection=null;
         PreparedStatement statement=null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "insert into comment values(null, ?, ?, ?, now())";
+            String sql = "insert into tag values(null, ?, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, comment.getBlogId());
-            statement.setInt(2, comment.getUserId());
-            statement.setString(3, comment.getContent());
+            statement.setInt(1, tag.getBlogId());
+            statement.setString(2, tag.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,14 +81,14 @@ public class CommentDao {
         }
     }
 
-    public void delete(int commentId) throws SQLException {
+    public void delete(int tagId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = DBUtil.getConnection();
-            String sql = "delete from comment where id=?";
+            String sql = "delete from tag where id=?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, commentId);
+            statement.setInt(1, tagId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
