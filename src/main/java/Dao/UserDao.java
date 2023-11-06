@@ -79,7 +79,7 @@ public class UserDao {
         try {
             connection = DBUtil.getConnection();
             String sql = "insert into user values(null, ?, ?, ?, 0, now())";
-            statement=connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, user.getUserName());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());

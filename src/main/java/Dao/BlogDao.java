@@ -100,7 +100,7 @@ public class BlogDao {
             connection = DBUtil.getConnection();
             String sql = "delete from blog where id=?";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1,blogId);
+            statement.setInt(1, blogId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
