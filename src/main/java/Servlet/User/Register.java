@@ -47,13 +47,12 @@ public class Register extends HttpServlet{
                 user.setEmail(email);
                 userDao.insert(user);
                 resp.setStatus(200);
-                System.out.println("------注册成功----------");
             } else {
-                resp.setStatus(102);
+                resp.sendError(403);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.setStatus(101);
+            resp.sendError(403);
         }
     }
 }

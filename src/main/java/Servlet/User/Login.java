@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 public class Login extends HttpServlet{
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         InputStream inputStream = req.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         String line;
@@ -38,19 +39,17 @@ public class Login extends HttpServlet{
         try {
             User user = userDao.selectOne(loginName);
             if (user != null) {
-                System.out.println("------准备判断密码---------");
                 if (loginPwd.equals(user.getPassword())) {
                     resp.setStatus(200);
                 } else {
-                    resp.sendError(404, "密码错误");
+                    resp.sendError(403);
                 }
-                System.out.println("------判断密码结束---------");
             } else {
-                resp.sendError(404, "用户名不存在");
+                resp.sendError(403);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.sendError(404, "数据库出错");
+            resp.sendError(403);
         }
     }
 }

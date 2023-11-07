@@ -27,7 +27,7 @@ public class MyFilter implements javax.servlet.Filter {
         // 设置允许跨域访问的请求头
         httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-
+        System.out.println("过滤器收到请求");
         //对request和response进行一些预处理
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
