@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Blog;
 import model.Tag;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,9 @@ import java.util.Set;
 
 @WebServlet("/query/tagname")
 public class tagname extends HttpServlet{
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("tagname");
 
         BlogDao blogDao = new BlogDao();
@@ -49,7 +50,7 @@ public class tagname extends HttpServlet{
             resp.setStatus(200);
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.setStatus(101);
+            resp.sendError(403);
         }
     }
 }

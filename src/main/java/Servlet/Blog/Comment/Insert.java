@@ -3,23 +3,43 @@ package Servlet.Blog.Comment;
 import Dao.BlogDao;
 import Dao.CommentDao;
 import Dao.UserDao;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Blog;
 import model.Comment;
 import model.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 @WebServlet("/comment/insert")
 public class Insert extends HttpServlet{
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        int id = Integer.parseInt(req.getParameter("articleid"));
-        String username = req.getParameter("username");
-        String content = req.getParameter("text");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        InputStream inputStream = req.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        String jsonString = stringBuilder.toString();
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+        int id = jsonNode.get("articleid").asInt();
+        String username = jsonNode.get("username").asText();
+        String content = jsonNode.get("text").asText();
+
         BlogDao blogDao = new BlogDao();
         UserDao userDao = new UserDao();
         CommentDao commentDao = new CommentDao();
@@ -34,14 +54,11 @@ public class Insert extends HttpServlet{
                 commentDao.insert(comment);
                 resp.setStatus(200);
             } else {
-                if (blog == null)
-                    resp.setStatus(104);
-                else
-                    resp.setStatus(102);
+                resp.sendError(403);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.setStatus(101);
+            resp.sendError(403);
         }
     }
 }

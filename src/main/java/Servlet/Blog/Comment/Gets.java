@@ -11,6 +11,7 @@ import model.Blog;
 import model.Comment;
 import model.User;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,9 @@ import java.util.List;
 
 @WebServlet("/comment/getComments")
 public class Gets extends HttpServlet{
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("articleid"));
 
         BlogDao blogDao = new BlogDao();
@@ -50,11 +51,11 @@ public class Gets extends HttpServlet{
                 resp.getWriter().write(respJson);
                 resp.setStatus(200);
             } else {
-                resp.setStatus(104);
+                resp.sendError(403);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.setStatus(101);
+            resp.sendError(403);
         }
     }
 }

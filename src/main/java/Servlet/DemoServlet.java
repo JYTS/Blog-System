@@ -1,4 +1,4 @@
-package Servlet.Blog;
+package Servlet;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -23,6 +23,25 @@ public class DemoServlet extends HttpServlet {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //int num = Integer.parseInt(req.getParameter("number"));
+
+        //从数据库中查询到博客列表，转成json格式，直接返回
+        //查询数据库
+        BlogDao blogDao=new BlogDao();
+        List<Blog> blogs= null;
+        try {
+            blogs = blogDao.selectAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //将blogs转成json格式
+        String respJson=objectMapper.writeValueAsString(blogs);
+        resp.setContentType("application/json;charset=utf8");
+        resp.setStatus(200);
+        resp.getWriter().write(respJson);
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         InputStream inputStream = req.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         String line;
@@ -32,6 +51,8 @@ public class DemoServlet extends HttpServlet {
         }
         String jsonString = stringBuilder.toString();
         JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+        //int id = jsonNode.get("id").asInt();
 
         //从数据库中查询到博客列表，转成json格式，直接返回
         //查询数据库
