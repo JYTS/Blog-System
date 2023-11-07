@@ -28,11 +28,11 @@
 function loadBlogPost(articleId) 
     {
         const xhr = new XMLHttpRequest();
+        const url = `http://127.0.0.1:8080/Blog-System/blog/info?id=${articleId}`;
+        xhr.open("GET", url, true);
     
 
-        // 接口4 根据articleid获取文章详细内容
-        xhr.open("GET", `http://127.0.0.1:8080/Blog-System/blog/info`, true);
-        const requestBody = JSON.stringify({ articleid: articleId });
+
     
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -75,7 +75,7 @@ function loadBlogPost(articleId)
         };
     
         // 发送请求
-        xhr.send(requestBody);
+        xhr.send();
     }
 //获取指定文章id的评论
 // ### 1 获取文章评论
@@ -119,8 +119,9 @@ function loadBlogPost(articleId)
     
         // 使用 articleId 发送请求以获取评论数据
         // 接口7 获取文章评论接口
-        xhr.open("GET", `http://127.0.0.1:8080/Blog-System/comment/getComments`, true);
-        const requestBody = JSON.stringify({ articleid: articleId });
+        const url = `http://127.0.0.1:8080/Blog-System/comment/getComments?articleid=${articleId}`;
+        xhr.open("GET", url, true);
+  
     
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -156,7 +157,7 @@ function loadBlogPost(articleId)
         };
     
         // 发送请求
-        xhr.send(requestBody);
+        xhr.send();
     }
 //进行评论根据文章id，session中存的用户名，和文本构成评论
 // ### 2 提交评论
@@ -271,14 +272,16 @@ function loadBlogPost(articleId)
     function loadTagsForArticle(articleID) {
         // 获取标签容器
         var tagContainer = document.getElementById("tag-container");
-        const requestData = { article_id: articleID };
-        // 将对象转换为 JSON 字符串
-        const jsonData = JSON.stringify(requestData);
+
+
     
         // 创建XHR请求
         var xhr = new XMLHttpRequest();
         // 接口9 获取文章的标签接口
-        xhr.open("GET", "http://127.0.0.1:8080/Blog-System/tag/getTags", true);
+
+        const url = `http://127.0.0.1:8080/Blog-System/tag/getTags?id=${articleID}`;
+        xhr.open("GET", url, true);
+  
     
         xhr.onload = function () 
         {
@@ -319,7 +322,7 @@ function loadBlogPost(articleId)
         };
     
         // 发送XHR请求
-        xhr.send(jsonData);
+        xhr.send();
     }
 //删除博客
 // ### 3 删除博客文章
@@ -344,11 +347,13 @@ function loadBlogPost(articleId)
 // - 错误响应（101, 104）
 function deleteBlogPost(articleId) {
     const xhr = new XMLHttpRequest();
-    const requestBody = JSON.stringify({ id: articleId });
+
 
     // 使用文章ID发送删除请求
     // 接口10删除博客文章接口
-    xhr.open("DELETE", `http://127.0.0.1:8080/Blog-System/blog/delete`, true);
+    const url = `http://127.0.0.1:8080/Blog-System/blog/delete?id=${articleId}`;
+    xhr.open("DELETE", url, true);
+
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -361,7 +366,7 @@ function deleteBlogPost(articleId) {
     };
 
     // 发送删除请求
-    xhr.send(requestBody);
+    xhr.send();
 }
 
     

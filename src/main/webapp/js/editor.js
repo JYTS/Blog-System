@@ -34,14 +34,13 @@
 function loadTagsForArticle(articleID) {
     // 获取标签容器
     var tagContainer = document.getElementById("tag-container");
-    const requestData = { id: articleID };
-    // 将对象转换为 JSON 字符串
-    const jsonData = JSON.stringify(requestData);
+
 
     // 创建XHR请求
     var xhr = new XMLHttpRequest();
+    const url = `http://127.0.0.1:8080/Blog-System/tag/getTags?id=${articleID}`;
+    xhr.open("GET", url, true);
 
-    xhr.open("GET", "http://127.0.0.1:8080/Blog-System/tag/getTags", true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -74,7 +73,7 @@ function loadTagsForArticle(articleID) {
     };
 
     // 发送XHR请求
-    xhr.send(jsonData);
+    xhr.send();
 }
 //删除tags
 //     ### 3 删除标签
@@ -104,18 +103,14 @@ function deleteTag(tagElement, articleID, tagName) {
 
     // 发送HTTP请求以删除标签
     const xhr = new XMLHttpRequest();
-    xhr.open("DELETE", "http://127.0.0.1:8080/Blog-System/tag/delete", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
 
+    const url = `http://127.0.0.1:8080/Blog-System/tag/delete?articleID=${articleID}&tagName=${tagName}`;
+
+    xhr.open("DELETE", url, true);
     // 准备要发送的数据，通常包括文章ID和标签名
-    const requestData = {
-        articleID: articleID,
-        tagName: tagName
-    };
 
-    // 将数据转换为JSON字符串
-    const jsonData = JSON.stringify(requestData);
-    console.log(jsonData)
+
+
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -128,7 +123,7 @@ function deleteTag(tagElement, articleID, tagName) {
     };
 
     // 发送请求
-    xhr.send(jsonData);
+    xhr.send();
 }
 
 // 添加事件监听器以处理点击"X"按钮的事件
@@ -191,6 +186,7 @@ function addTag(articleID) {
 
         
             const xhr = new XMLHttpRequest();
+            
             const url = "http://127.0.0.1:8080/Blog-System/tag/insert";
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
@@ -283,8 +279,11 @@ function loadComments(articleId) {
     const xhr = new XMLHttpRequest();
 
     // 使用 articleId 发送请求以获取评论数据
-    xhr.open("GET", `http://127.0.0.1:8080/Blog-System/comment/getComments`, true);
-    const requestBody = JSON.stringify({ articleid: articleId });
+
+    const url = `http://127.0.0.1:8080/Blog-System/comment/getComments?articleid=${articleId}`;
+
+    xhr.open("GET", url, true);
+    
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -336,7 +335,7 @@ function loadComments(articleId) {
     };
 
     // 发送请求
-    xhr.send(requestBody);
+    xhr.send();
 }
     
 // 处理删除评论的函数，这里你需要实现具体的删除逻辑
@@ -353,20 +352,22 @@ function loadComments(articleId) {
 // | 字段名     | 格式 | 是否必需 | 简介     |
 // | ---------- | ---- | -------- | -------- |
 // | Comment_id | Int  | T        | 评论的id |
+// | articleid | Int  | T        | 评论的id |
 
 // **响应**
 
 // - 成功响应（200）
 
 // - 错误响应（101, 105）
-function deleteComment(commentId) {
+function deleteComment(commentId,articleid) {
     const xhr = new XMLHttpRequest();
-    const url = 'http://127.0.0.1:8080/Blog-System/comment/delete';
 
-    xhr.open('DELETE', url, true);
-    const requestData = { Comment_id: commentId };
-    console.log(requestData)
-    xhr.setRequestHeader('Content-Type', 'application/json');
+
+
+    const url = `http://127.0.0.1:8080/Blog-System/comment/delete?articleid=${articleid}&Comment_id=${commentId}`;
+    xhr.open("DELETE", url, true);
+
+
 
 
 
@@ -382,7 +383,7 @@ function deleteComment(commentId) {
             console.error(`删除评论 ${commentId} 时出错: ${xhr.statusText}`);
         }
     };
-    xhr.send(JSON.stringify(requestData));
+    xhr.send(JSON.stringify());
 
 
 }
@@ -417,13 +418,14 @@ function deleteComment(commentId) {
 // | authorid | Int    | T        | 作者用户id           |
 // | date     | String | T        | 发布日期"YYYY-MM-DD" |
     function getArticleData(articleID) {
-        const requestData = {
-            articleid: articleID
-        };
+
     
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://127.0.0.1:8080/Blog-System/blog/info", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+        const url = `http://127.0.0.1:8080/Blog-System/blog/info?id=${articleID}`;
+        xhr.open("GET", url, true);
+    
     
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -439,7 +441,7 @@ function deleteComment(commentId) {
             }
         };
     
-        xhr.send(JSON.stringify(requestData));
+        xhr.send();
     }
      // 定义 changeArticleData 函数
 //      ### 4 修改文章（未完成）

@@ -1,29 +1,41 @@
 package Servlet.User;
 
 import Dao.UserDao;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import model.User;
 
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
-import java.util.Enumeration;
 
 @WebServlet("/user/register")
 public class Register extends HttpServlet{
+    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        Enumeration<String> names = req.getParameterNames();
-        while (names.hasMoreElements()) {
-            String o = names.nextElement();
-            System.out.println(1);
-            System.out.println(o);
-            System.out.println(req.getParameter(o));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        InputStream inputStream = req.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
         }
-        String name = req.getParameter("username");
-        String pwd = req.getParameter("password");
-        String email = req.getParameter("email");
+        String jsonString = stringBuilder.toString();
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+        String name = jsonNode.get("username").asText();
+        String pwd = jsonNode.get("password").asText();
+        String email = jsonNode.get("email").asText();
 
         UserDao userDao = new UserDao();
         try {

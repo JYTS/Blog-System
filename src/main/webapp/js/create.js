@@ -1,25 +1,28 @@
-// ### 1 获取文章的标签
+// ### 4 加载n个标签（未完成）
 
-// **请求**
+// **描述**
+
+// 该接口用于从服务器端获取标签数据，并将标签元素添加到指定的容器中。用户需要提供要加载的标签数量。
+
+//  **请求**
 
 // - 方法: GET
 
-// - URL: http://127.0.0.1:8080/Blog-System/tag/getTags
+// - URL: http://127.0.0.1:8080/Blog-System/tag/getnTags
 
 // **请求体**
 
-// - id（int, 必需）- 要获取标签的文章的id
+// - num（int, 必需）- 要加载的标签数量
 
 // **响应**
 
 // - 成功响应（200）
 
-// - 错误响应（101, 104）
+// - 错误响应（101）
 
-// | 字段名     | 格式 | 是否必需 | 简介                   |
-// | ---------- | ---- | -------- | ---------------------- |
-// | article_id | Int  | T        | 博客的id               |
-// | tags       | List | T        | 数个标签信息组成的数组 |
+// | 字段名 | 格式 | 是否必需 | 简介                   |
+// | ------ | ---- | -------- | ---------------------- |
+// | tags   | List | T        | 数个标签信息组成的数组 |
 
 // 标签信息的结构如下
 
@@ -30,14 +33,14 @@
 function loadTagsAndAddToContainer(num) {
     // 获取标签容器
     const tagContainer = document.getElementById("taglist");
-    const requestData = { num: num };
-    const jsonData = JSON.stringify(requestData);
 
     // 向后台请求标签数据
     function loadTags() 
     {
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://127.0.0.1:8080/Blog-System/tag/getTags", true);
+
+        const url = ` http://127.0.0.1:8080/Blog-System/tag/getnTags?num=${num}`;
+        xhr.open("GET", url, true);
 
         xhr.onload = function () 
         {
@@ -72,7 +75,7 @@ function loadTagsAndAddToContainer(num) {
             }
         };
 
-        xhr.send(jsonData);
+        xhr.send();
     }
 
     // 调用加载标签数据的函数

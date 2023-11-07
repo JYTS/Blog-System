@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 @WebServlet("/blog")
 public class BlogServlet extends HttpServlet {
-    private ObjectMapper objectMapper=new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //从数据库中查询到博客列表，转成json格式，直接返回

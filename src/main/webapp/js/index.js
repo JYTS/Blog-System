@@ -64,9 +64,11 @@ if (username) {
         // | title  | String | T        | 博客标题 |
         
 
-        xhr.open("GET", 'http://127.0.0.1:8080/Blog-System/query/rand?number=' + numberOfArticles, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        const requestBody = JSON.stringify({ number: numberOfArticles });
+
+
+        var url = `http://127.0.0.1:8080/Blog-System/query/rand?number=${numberOfArticles}`;
+        xhr.open("GET", url, true);
+
     
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -75,7 +77,7 @@ if (username) {
                 if (response.blogs) {
                     // 提取文章ID数组
                     const articleIDs = response.blogs.map(blog => blog.id);
-                    // console.log(articleIDs)
+                    console.log(articleIDs)
     
                     if (articleIDs.length > 0) {
                         // 存储文章ID到sessionStorage，键名为 "indexid"
@@ -95,7 +97,7 @@ if (username) {
             }
         };
     
-        xhr.send(requestBody);
+        xhr.send();
     }
 
     // 显示文章
@@ -140,12 +142,13 @@ function requestArticleContent(articleID) {
     console.log(articleID);
     // 创建一个新的XMLHttpRequest对象
     const xhr = new XMLHttpRequest();
-    const requestBody = { id: articleID };
-    console.log(requestBody)
+
+
 
     // 配置请求，使用GET请求，并将i作为博客ID
     
-    xhr.open("GET", 'http://127.0.0.1:8080/Blog-System/blog/info?id=' + articleID, true);
+    var url = `http://127.0.0.1:8080/Blog-System/blog/info?id=${articleID}`;
+    xhr.open("GET", url, true);
     
 
     xhr.onload = function () {
@@ -207,7 +210,7 @@ function requestArticleContent(articleID) {
     };
 
     // 发送请求
-    xhr.send(JSON.stringify(requestBody));
+    xhr.send();
 }
 
     const storedIndexId = sessionStorage.getItem("indexid");

@@ -79,11 +79,10 @@ document.getElementById('editor').addEventListener('click', function () {
     // | ------ | ------ | -------- | -------- |
     // | id     | Int    | T        | 博客的id |
     // | title  | String | T        | 博客标题 |
+    const url = `http://127.0.0.1:8080/Blog-System/query/username?username=${username}`;
+    xhr.open("GET", url, true);
 
-    xhr.open("GET", 'http://127.0.0.1:8080/Blog-System/query/username', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    const requestBody = JSON.stringify({ username : username });
-    console.log(requestBody)
+  
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -109,7 +108,7 @@ document.getElementById('editor').addEventListener('click', function () {
         }
     };
 
-    xhr.send(requestBody);
+    xhr.send();
 }
 // 显示文章
 function displayArticles(articleIDs) {
@@ -155,10 +154,13 @@ function requestArticleContent(articleID,blogname) {
 
     // 配置请求，使用GET请求，并将i作为博客ID
     //接口4根据articleid获取文章详细内容
-    xhr.open("GET", `http://127.0.0.1:8080/Blog-System/blog/info`, true);
 
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    const requestBody = JSON.stringify({ articleid : articleID });
+    const url = `http://127.0.0.1:8080/Blog-System/blog/info?id=${articleID}`;
+    xhr.open("GET", url, true);
+
+
+
+
     xhr.onload = function () {
         if (xhr.status === 200) {
             const data = JSON.parse(xhr.responseText);
@@ -218,7 +220,7 @@ function requestArticleContent(articleID,blogname) {
     };
 
     // 发送请求
-    xhr.send(requestBody);
+    xhr.send();
 }
 
 

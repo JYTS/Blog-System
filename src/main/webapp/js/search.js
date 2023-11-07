@@ -133,10 +133,10 @@ logoutButton.addEventListener("click", function () {
 // | title  | String | T        | 博客标题 |
 function requestArticlesByTag(tagname) {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `http://127.0.0.1:8080/Blog-System/query/tagname`, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    const requestBody = JSON.stringify({ tagname: tagname });
-    console.log(requestBody)
+
+
+    const url = `http://127.0.0.1:8080/Blog-System/query/tagname?tagname=${tagname}`;
+    xhr.open("GET", url, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -162,7 +162,7 @@ function requestArticlesByTag(tagname) {
         }
     };
 
-    xhr.send(requestBody);
+    xhr.send();
 }
 
     //根据搜索内容获得id数组
@@ -199,10 +199,10 @@ function requestArticlesByTag(tagname) {
 // | title  | String | T        | 博客标题 |
 function requestsearchArticles(searchtxt) {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", 'http://127.0.0.1:8080/Blog-System/query/keyword', true);
+    const url = `http://127.0.0.1:8080/Blog-System/query/keyword?searchtxt=${searchtxt}`;
+    xhr.open("GET", url, true);
+
     xhr.setRequestHeader('Content-Type', 'application/json');
-    const requestBody = JSON.stringify({ searchtxt: searchtxt });
-    console.log(requestBody)
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -228,7 +228,7 @@ function requestsearchArticles(searchtxt) {
         }
     };
 
-    xhr.send(requestBody);
+    xhr.send();
 }
 
 // 显示文章
@@ -273,11 +273,11 @@ function requestArticleContent(articleID)
 
 // 创建一个新的XMLHttpRequest对象
 const xhr = new XMLHttpRequest();
+const url = `http://127.0.0.1:8080/Blog-System/blog/info?id=${articleID}`;
+xhr.open("GET", url, true);
 
 // 配置请求，使用GET请求，并将i作为博客ID
-xhr.open("GET", `http://127.0.0.1:8080/Blog-System/blog/info`, true);
-const requestBody = JSON.stringify({ id: articleID });
-console.log(requestBody)
+
 
 
 xhr.onload = function () {
@@ -339,7 +339,7 @@ xhr.onload = function () {
 };
 
 // 发送请求
-xhr.send(requestBody);
+xhr.send();
 }
 //加载标签函数
 // ### 4 加载n个标签（未完成）
@@ -376,16 +376,16 @@ xhr.send(requestBody);
 function loadTagsAndAddToContainer(num) {
     // 获取标签容器
     const tagContainer = document.getElementById("tag-container");
-    const requestData = { num: num };
-    const jsonData = JSON.stringify(requestData);
-    console.log(requestData)
+
+
 
     // 向后台请求标签数据
     function loadTags() 
     {
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://127.0.0.1:8080/Blog-System/tag/getnTags", true);
-
+ 
+        const url = `http://127.0.0.1:8080/Blog-System/tag/getnTags?num=${num}`;
+        xhr.open("GET", url, true);
         xhr.onload = function () 
         {
             if (xhr.status === 200) {
@@ -422,7 +422,7 @@ function loadTagsAndAddToContainer(num) {
             }
         };
 
-        xhr.send(jsonData);
+        xhr.send();
     }
 
     // 调用加载标签数据的函数
