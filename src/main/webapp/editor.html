@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>博客编辑</title>
+    
+    <link rel="stylesheet" type="text/css" href="css/editor.css">
+
+</head>
+<div>
+    <button id="return-button">返回个人主页</button>
+
+    <h1>编辑博客文章</h1>
+    <button id="myButton">保存</button>
+    <form id="blog-form">
+        <label for="title">标题:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="content">内容:</label>
+        <textarea id="content" name="content" rows="6" required></textarea><br><br>
+        
+    </form>
+    
+
+    <div class="comment-section">
+        <div class="comment-list" id="comment-list">
+            <!-- 这里将由 JavaScript 插入评论 -->
+        </div>
+    </div>
+
+    <div class="tag-input-container">
+        <label for="tag">添加标签:</label>
+        <input type="text" id="tag" name="tag">
+        <button id="add-tag-button">添加</button>
+    </div>
+    <div id="tag-container" class="tag-container"></div>
+
+    
+    <script src="js/editor.js"></script>
+
+
+
+
+    
+
+
+
+    
+    
+</body>
+</html>

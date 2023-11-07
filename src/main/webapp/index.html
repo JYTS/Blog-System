@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    
+    <title>你的网站</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#" id="home">首页</a></li>
+            <li><a href="#" id="profile">个人主页</a></li>
+            <li><a href="#" id="info">个人信息</a></li>
+            <li><a href="#" id="search">搜索界面</a></li>
+            <li><a href="#" id="editor">创建文章</a></li>
+
+
+        </ul>
+        
+    </nav>
+
+    <div class="user-info-box" id="userInfoBox">
+        <img src="img/mmbb.jpg" alt="用户头像" class="user-avatar">
+        <h2 id="username">你好</h2>
+    </div>
+    <button id="logout" class="logout-button">退出登录</button>
+
+
+    <main>
+
+
+        <div class="scroll-container" id="article-container">
+            <!-- 这里将由 JavaScript 插入文章 -->
+        </div>
+
+        <script src="js/index.js"></script>
+    </main>
+</body>
+</html>

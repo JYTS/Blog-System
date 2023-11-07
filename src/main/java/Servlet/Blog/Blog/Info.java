@@ -30,8 +30,9 @@ public class Info extends HttpServlet{
                 User user = userDao.selectOne(blog.getUserId());
                 ObjectNode json = JsonNodeFactory.instance.objectNode();
                 json.put("id", blog.getBlogId());
+                json.put("title", blog.getTitle());
                 json.put("content", blog.getContent());
-                json.put("author", true);
+                json.put("author", user.getUserName());
                 json.put("authorId", blog.getUserId());
                 json.put("date", blog.getPostTime().toString());
                 String respJson=objectMapper.writeValueAsString(json);

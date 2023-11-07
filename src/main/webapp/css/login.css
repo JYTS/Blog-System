@@ -1,0 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  font-size: 16px; /* 基本字体大小 */
+  line-height: 1.5; /* 基本行高 */
+}
+@media (max-width: 600px) {
+  body {
+      font-size: 14px;
+      line-height: 1.4;
+  }
+}
+  
+  .login-container {
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    text-align: center;
+    max-width: 400px; /* 设置容器的最大宽度 */
+    margin: auto; /* 居中显示 */
+}
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  #error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  

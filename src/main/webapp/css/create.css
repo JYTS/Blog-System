@@ -1,0 +1,196 @@
+/* 布局容器 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+
+    
+}
+#return-button {
+    position: absolute;
+    top:1px; /* 距离顶部的距离 */
+    left: 1px; /* 距离左侧的距离 */
+    cursor: pointer; /* 将鼠标悬停时的光标形状设置为手型 */
+}
+#myButton {
+    position: absolute;
+    top:1px; /* 距离顶部的距离 */
+    left: 150px; /* 距离左侧的距离 */
+    cursor: pointer; /* 将鼠标悬停时的光标形状设置为手型 */
+}
+
+
+
+
+h1 {
+    font-size: 24px; /* 设置标题的字体大小 */
+    color: #000000; /* 设置标题的文本颜色 */
+    text-align: center; /* 居中标题文本 */
+}
+
+
+/* 表单样式 */
+#blog-form {
+    background-color: #c7b8b8; /* 设置表单的背景颜色 */
+    height: 600px;
+    width: 60%;
+    padding: 20px; /* 设置表单的内边距 */
+    border: 6px solid #ccc; /* 设置表单的边框 */
+    border-radius: 10px; /* 设置表单的边框圆角 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#title, #content {
+    width: 90%; /* 设置输入字段和文本区域的宽度为100% */
+   
+    padding: 10px; /* 设置输入字段和文本区域的内边距 */
+    margin-bottom: 10px; /* 设置输入字段和文本区域之间的外边距 */
+    border: 1px solid #ccc; /* 设置输入字段和文本区域的边框 */
+    border-radius: 5px; /* 设置输入字段和文本区域的边框圆角 */
+}
+#content {
+    height:70%;
+}
+
+
+
+
+button {
+
+    background-color: #064a87; /* 设置按钮的背景颜色 */
+    color: #fff; /* 设置按钮的文本颜色 */
+    padding: 10px 20px; /* 设置按钮的内边距 */
+    border: none; /* 移除按钮的边框 */
+    border-radius: 5px; /* 设置按钮的边框圆角 */
+    
+}
+
+button:hover {
+    background-color: #b30000; /* 设置鼠标悬停时的按钮背景颜色 */
+}
+/* 左边文本输入区域 */
+form {
+    flex: 1;
+    margin-right: 20px;
+
+}
+
+
+
+
+
+
+
+.tag-input-container {
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: fixed;
+    width: 30%;
+    height: 20px;
+    top:42%;
+    right: 10px;
+    margin-top: 100px; /* 可以根据需要调整上边距 */
+    margin-left: auto;
+
+}
+
+
+#tag {
+    width: 100%; /* 设置文本框的宽度为100%，占满父容器宽度 */
+    height: 20px;
+    padding: 10px; /* 设置文本框的内边距 */
+    border: 1px solid #ccc; /* 设置文本框的边框 */
+    border-radius: 5px; /* 设置文本框的边框圆角 */
+    display: block; /* 将文本框转换为块级元素 */
+}
+
+
+
+
+#add-tag-button {
+    background-color: #0074D9; /* 按钮的背景颜色 */
+    color: #fff; /* 按钮的文本颜色 */
+    padding: 2px 20px; /* 按钮的内边距 */
+    border: none; /* 移除按钮的边框 */
+    border-radius: 10px; /* 按钮的边框圆角 */
+    display: block; /* 将按钮转换为块级元素 */
+    margin: 10px auto; /* 水平居中按钮，并在上方和下方留有一些间距 */
+}
+
+#add-tag-button:hover {
+    background-color: #bb0404; /* 设置鼠标悬停时的按钮背景颜色 */
+}
+label[for="tag"] {
+    display: block; /* 将标签转换为块级元素，使其独占一行 */
+    font-weight: bold; /* 设置标签的文本为粗体 */
+    margin-bottom: 10px; /* 设置标签下方的外边距 */
+    width: 100px;
+}
+
+
+.taglist {
+    width: 28%;
+    height: 45%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: #eba5a5;
+    position: fixed;
+    top: 10px; /* 调整top属性 */
+    right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.tag-container {
+    width: 28%;
+    height: 35%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: #eba5a5;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.tag {
+    width: auto; /* 使用百分比表示标签的宽度 */
+    height: 10px; /* 使用 "auto" 以根据内容自动调整高度 */
+    font-size:8px; /* 使用百分比来表示字体大小 */
+    background-color: #0078d4;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 1px 1px;
+    position: relative; /* 使用相对定位 */
+    padding: 5px 10px 5px 0px; /* 分别为上、右、下、左边的填充 */
+
+}
+
+.delete-button {
+    position: absolute;
+
+    top: 0;
+    right: 0; /* 放置在左上角 */
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 1px 1px; /*减小填充值 */
+    border-radius: 50%;
+    cursor: pointer;
+}
+/* 标签创建区域 */
+#tag, #add-tag-button {
+    display: block;
+    margin-top: 10px;
+    
+}

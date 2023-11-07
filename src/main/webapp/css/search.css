@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+nav {
+    background-color: #424242;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-left: 100px;
+}
+.logout-button {
+    position: absolute;
+    top: 10px; /* 调整垂直位置 */
+    right: 10px; /* 调整水平位置 */
+    padding: 5px 10px; /* 调整按钮内边距 */
+    background-color: #f00; /* 设置背景颜色 */
+    color: #fff; /* 设置文本颜色 */
+    border: none;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #ff0000; /* 设置鼠标悬停时的背景颜色 */
+}
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+
+
+nav button {
+    padding: 10px;
+}
+
+.user-avatar {
+    width: 200px; /* 设置头像宽度 */
+    height: 200px; /* 设置头像高度 */
+    border-radius: 50%; /* 将头像设置为圆形 */
+    margin-bottom: 10px; /* 底部外边距 */
+}
+
+header {
+    background-color: #4e4848;
+    color: #fcfcfc;
+    padding: 10px;
+    text-align: center;
+}
+
+/* 其他样式保持不变 */
+/* 搜索栏样式 */
+.search-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#search-input {
+    padding: 8px;
+    width: 70%;
+    border: 1px solid #ccc;
+}
+
+#search-button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* 文章列表样式 */
+.article-list {
+    width: 65%;
+    float: left;
+}
+
+/* 右侧标签栏样式 */
+
+#article-container {
+    max-height: 700px; /* 设置容器的最大高度，超出部分将出现滚动条 */
+    max-width:1000px;
+    overflow-y: auto; /* 启用垂直滚动条，仅在内容溢出时显示 */
+    border: 1px solid #ccc; /* 可选的边框样式 */
+    padding: 10px; /* 可选的内边距 */
+    background-color: #f9f9f9; /* 可选的背景颜色 */
+}
+
+/* 自定义滚动条样式（可选） */
+#article-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+#article-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+#article-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+/* 其他样式保持不变 */
+#article-container {
+    overflow-y: scroll;
+    max-height: 800px; /* 设置容器的最大高度，根据需要进行调整 */
+}
+.tag-container {
+    width: 28%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: #eba5a5;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.tag {
+    width: auto; /* 使用百分比表示标签的宽度 */
+    height: auto; /* 使用 "auto" 以根据内容自动调整高度 */
+    font-size: 80%; /* 使用百分比来表示字体大小 */
+    background-color: #0078d4;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 1px 1px;
+}
+
+
+main {
+    max-width: 1100px;
+    max-height: 900px;
+    margin: 0px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    overflow-y: auto;
+
+}
+
+/* 其他样式保持不变 */

@@ -18,7 +18,7 @@ public class UserDao {
         ResultSet resultSet;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select password from user where username = ?";
+            String sql = "select * from user where username = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             resultSet = statement.executeQuery();
@@ -29,7 +29,8 @@ public class UserDao {
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setRegisterTime(resultSet.getTimestamp("registerTime"));
-                user.setAdmin(resultSet.getBoolean("isAdmin"));
+                int isAdmin = resultSet.getInt("isAdmin");
+                user.setAdmin(isAdmin == 1);
                 return user;
             }
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class UserDao {
         ResultSet resultSet;
         try {
             connection = DBUtil.getConnection();
-            String sql = "select password from user where id = ?";
+            String sql = "select * from user where id = ?";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
@@ -57,7 +58,8 @@ public class UserDao {
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
                 user.setRegisterTime(resultSet.getTimestamp("registerTime"));
-                user.setAdmin(resultSet.getBoolean("isAdmin"));
+                int isAdmin = resultSet.getInt("isAdmin");
+                user.setAdmin(isAdmin == 1);
                 return user;
             }
         } catch (SQLException e) {

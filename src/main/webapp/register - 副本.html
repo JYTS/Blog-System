@@ -1,0 +1,106 @@
+<!-- 注册页面 HTML 代码 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/register.css">
+  
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+  <form id="register-form" onsubmit="return registerUser()">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" name="confirm-password" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Register">
+    </div>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a>.</p>
+
+  <script>
+    function registerUser() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirm-password').value;
+      var email = document.getElementById('email').value;
+
+      // 检查密码和确认密码是否相同
+      if (password !== confirmPassword) {
+        alert('密码不同');
+        return false;
+      }
+
+      // 构建要发送的 JSON 对象
+      const data = {
+        username: username,
+        password: password,
+        email: email
+      };
+      console.log(data)
+
+      // 创建 XMLHttpRequest 对象
+      const xhr = new XMLHttpRequest();
+
+//       ### 2 用户注册
+
+// **请求**
+
+// - 方法: POST
+// - URL: http://127.0.0.1:8080/Blog-System/user/register
+
+// **请求体**
+
+// | 字段名   | 格式   | 是否必需 | 简介     |
+// | -------- | ------ | -------- | -------- |
+// | username | String | T        | 用户名   |
+// | password | String | T        | 密码     |
+// | email    | String | T        | 电子邮件 |
+
+// **响应**
+
+// - 成功响应（200）
+
+// - 错误响应（101-102）
+
+      xhr.open("POST", "http://127.0.0.1:8080/Blog-System/user/register", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      // 定义请求完成时的回调函数
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          // 注册成功
+          alert('注册成功');
+          window.location.href = 'login.html';
+        } else {
+          // 注册失败，显示错误消息
+          alert('用户名已被注册，请重新注册');
+          console.error('XHR error:', xhr.statusText);
+        }
+      };
+
+      // 发送请求，并将 JSON 对象转换为字符串
+      xhr.send(JSON.stringify(data));
+
+      // 阻止表单提交
+      return false;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/blog-post.css">
+    
+    <title>你的网站</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <a id="returnLink">返回</a>
+
+
+        </ul>
+        
+    </nav>
+
+
+    <button id="logout" class="logout-button">退出登录</button>
+    <button id="edit-button" style="display: none" class="logout-button">编辑博客 </button>
+    <button id="delete-button" style="display: none" class="logout-button">删除博客 </button>
+
+
+
+
+
+    <div class="scroll-container" id="article-container">
+            <!-- 这里将由 JavaScript 插入文章 -->
+    </div>
+
+
+    
+
+
+        
+
+
+
+    <div class="comment-section">
+        <div class="comment-form">
+            <textarea id="comment-text" placeholder="在此输入您的评论"></textarea>
+            <button id="submit-comment">提交评论</button>
+        </div>
+
+        <div class="comment-list" id="comment-list">
+            <!-- 这里将由 JavaScript 插入评论 -->
+        </div>
+        <script src="js/blog-post.js"></script>
+        <!-- 添加一个评论表单 -->
+
+    </div>
+    <div id="tag-container" class="tag-container"></div>
+
+</body>
+</html>

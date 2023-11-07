@@ -20,11 +20,13 @@ public class Login extends HttpServlet{
         try {
             User user = userDao.selectOne(loginName);
             if (user != null) {
+                System.out.println("------准备判断密码---------");
                 if (loginPwd.equals(user.getPassword())) {
                     resp.setStatus(200);
                 } else {
                     resp.setStatus(103);
                 }
+                System.out.println("------判断密码结束---------");
             } else {
                 resp.setStatus(102);
             }
