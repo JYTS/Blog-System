@@ -7,7 +7,7 @@
     <!--配置过滤器-->
     <filter>
         <filter-name>FilterDemo01</filter-name>
-        <filter-class>Test.Filter</filter-class>
+        <filter-class>Test.MyFilter</filter-class>
     </filter>
 
     <!--映射过滤器-->
