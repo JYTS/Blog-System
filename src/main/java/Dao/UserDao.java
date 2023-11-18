@@ -85,4 +85,28 @@ public class UserDao {
             DBUtil.close(connection,statement,null);
         }
     }
+
+    public void update(User user) throws SQLException {
+        Connection connection=null;
+        PreparedStatement statement=null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "UPDATE user " +
+                         "SET username=?, password=?, email=?, isAdmin=? " +
+                         "WHERE id=?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            int isAdmin = 0;
+            if (user.isAdmin()) isAdmin = 1;
+            statement.setInt(4, isAdmin);
+            statement.setInt(5, user.getUserId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(connection,statement,null);
+        }
+    }
 }

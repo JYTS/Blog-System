@@ -67,7 +67,7 @@ public class Modify extends HttpServlet{
                     }
                     blog.setContent(content_new);
                 }
-                blogDao.modify(blog);
+                blogDao.update(blog);
                 resp.setStatus(200);
             } else {
                 resp.sendError(403);

@@ -199,7 +199,7 @@ public class BlogDao {
     }
 
 
-    public void modify(Blog blog) throws SQLException {
+    public void update(Blog blog) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
