@@ -297,9 +297,10 @@ xhr.onload = function () {
 
             // 截断文章内容，只显示部分内容
             const maxContentLength = 200;
-            if (data.content.length > maxContentLength) {
-                data.content = data.content.slice(0, maxContentLength) + '...';
-
+            if (data.content.length > 0) {
+                if (data.content.length > maxContentLength) {
+                    data.content = data.content.slice(0, maxContentLength) + '...';
+                }
                 const readMoreButton = document.createElement("a");
                 readMoreButton.textContent = "阅读更多";
                 readMoreButton.href = `blog-post.html?id=${data.id}&txt=${txt}&lei=${lei}`;

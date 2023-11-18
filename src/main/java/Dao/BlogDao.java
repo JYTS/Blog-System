@@ -144,7 +144,7 @@ public class BlogDao {
             connection = DBUtil.getConnection();
             String sql = "select id, title, userId, postTime from blog where title LIKE ?";
             statement = connection.prepareStatement(sql);
-            statement.setString(1, "'%" + keyword + "%'");
+            statement.setString(1, "%" + keyword + "%");
             resultSet = statement.executeQuery();
             while (resultSet.next()){
                 Blog blog = new Blog();
