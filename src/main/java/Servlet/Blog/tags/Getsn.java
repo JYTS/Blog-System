@@ -41,7 +41,7 @@ public class Getsn extends HttpServlet{
             String respJson = objectMapper.writeValueAsString(outputJson);
             resp.setContentType("application/json;charset=utf8");
             resp.getWriter().write(respJson);
-            resp.sendError(403);
+            resp.setStatus(200);
         } catch (SQLException e) {
             e.printStackTrace();
             resp.sendError(403);

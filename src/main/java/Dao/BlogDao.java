@@ -162,7 +162,6 @@ public class BlogDao {
         return blogs;
     }
 
-
     public Blog selectOneInfo(int blogId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -189,4 +188,27 @@ public class BlogDao {
         }
         return null;
     }
+
+
+    public void modify(Blog blog) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "UPDATE blog " +
+                         "SET userId=?, title=?, content=?" +
+                         "WHERE id=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, blog.getUserId());
+            statement.setString(2, blog.getTitle());
+            statement.setString(3, blog.getContent());
+            statement.setInt(4, blog.getBlogId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(connection,statement,null);
+        }
+    }
+
 }
