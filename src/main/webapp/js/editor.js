@@ -359,12 +359,12 @@ function loadComments(articleId) {
 // - 成功响应（200）
 
 // - 错误响应（101, 105）
-function deleteComment(commentId,articleid) {
+function deleteComment(commentId) {
     const xhr = new XMLHttpRequest();
 
 
 
-    const url = `http://127.0.0.1:8080/Blog-System/comment/delete?articleid=${articleid}&Comment_id=${commentId}`;
+    const url = `http://127.0.0.1:8080/Blog-System/comment/delete?Comment_id=${commentId}`;
     xhr.open("DELETE", url, true);
 
 

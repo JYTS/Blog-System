@@ -23,7 +23,7 @@ public class MyFilter implements javax.servlet.Filter {
         // 设置允许跨域访问的域名
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         // 设置允许跨域访问的方法
-        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, DELETE");
         // 设置允许跨域访问的请求头
         httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
