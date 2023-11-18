@@ -375,6 +375,8 @@ function deleteComment(commentId) {
             // 删除成功的处理逻辑，可以刷新评论列表等
             
             console.log(`评论 ${commentId} 已成功删除。`);
+            loadComments(articleID);
+            alert("删除成功");
 
         } else {
             // 处理删除失败的情况
