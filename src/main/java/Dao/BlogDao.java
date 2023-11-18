@@ -135,6 +135,34 @@ public class BlogDao {
         return blogs;
     }
 
+    public List<Blog> selectFromKeyword(String keyword) throws SQLException {
+        List<Blog>blogs = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DBUtil.getConnection();
+            String sql = "select id, title, userId, postTime from blog where title LIKE ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "'%" + keyword + "%'");
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                Blog blog = new Blog();
+                blog.setBlogId(resultSet.getInt("id"));
+                blog.setTitle(resultSet.getString("title"));
+                blog.setUserId(resultSet.getInt("userId"));
+                blog.setPostTime(resultSet.getTimestamp("postTime"));
+                blogs.add(blog);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBUtil.close(connection,statement,resultSet);
+        }
+        return blogs;
+    }
+
+
     public Blog selectOneInfo(int blogId) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
