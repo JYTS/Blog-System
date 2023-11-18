@@ -36,9 +36,9 @@ public class Modify extends HttpServlet{
 
         int blogId = jsonNode.get("articleid").asInt();
         String title = jsonNode.get("title").asText();
-        String username = jsonNode.get("username").asText();
+        String username = jsonNode.get("author").asText();
         String content = jsonNode.get("content").asText();
-        int parts = jsonNode.get("allnum").asInt();
+        int parts = jsonNode.get("all").asInt();
         int index = jsonNode.get("index").asInt();
 
         BlogDao blogDao = new BlogDao();
@@ -67,6 +67,7 @@ public class Modify extends HttpServlet{
                     }
                     blog.setContent(content_new);
                 }
+                blogDao.modify(blog);
                 resp.setStatus(200);
             } else {
                 resp.sendError(403);

@@ -12,10 +12,11 @@ import java.util.List;
 
 public class BlogDao {
     // 1. 向博客列表中插入一个博客
-    public void insert(Blog blog) throws SQLException {
+    public int insert(Blog blog) throws SQLException {
         // JDBC 基本代码
         Connection connection = null;
         PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             // ①和数据库建立连接.
             connection = DBUtil.getConnection();
@@ -28,12 +29,20 @@ public class BlogDao {
             statement.setInt(3, blog.getUserId());
             // ③执行 SQL
             statement.executeUpdate();
+
+            sql = "select LAST_INSERT_ID() as id";
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             // ④ 关闭连接, 释放资源
             DBUtil.close(connection, statement,null);
         }
+        return -1;
     }
     // 2. 能够获取到博客表中的所有博客的信息 (用于在博客列表页, 此处每篇博客不一定会获取到完整的正文)
     public List<Blog> selectAll() throws SQLException {

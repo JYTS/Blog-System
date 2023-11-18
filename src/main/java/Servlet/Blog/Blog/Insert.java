@@ -48,8 +48,17 @@ public class Insert extends HttpServlet{
                 blog.setTitle(title);
                 blog.setContent("");
                 blog.setUserId(user.getUserId());
-                blogDao.insert(blog);
-                resp.setStatus(200);
+                int id = blogDao.insert(blog);
+                if (id >= 0){
+                    ObjectNode json = JsonNodeFactory.instance.objectNode();
+                    json.put("article_id", id);
+                    String respJson=objectMapper.writeValueAsString(json);
+                    resp.setContentType("application/json;charset=utf8");
+                    resp.getWriter().write(respJson);
+                    resp.setStatus(200);
+                } else {
+                    resp.sendError(403);
+                }
             } else {
                 resp.sendError(403);
             }
