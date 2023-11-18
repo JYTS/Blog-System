@@ -235,9 +235,7 @@ function addTag(articleID) {
 
 
 
-// 添加事件监听器以处理点击"添加标签"按钮的事件
-const addTagButton = document.getElementById("add-tag-button");
-addTagButton.addEventListener("click", addTag);
+
 //id获取评论
 // ### 1 获取文章评论
 
@@ -616,15 +614,20 @@ document.addEventListener("DOMContentLoaded", function ()
                 // 调用 changeArticleData 函数
                 changeArticleData(username, article_id);
             });
+            const addTagButton = document.getElementById("add-tag-button");
+
+            addTagButton.addEventListener("click", function() {
+                // 在用户点击添加标签按钮时执行 addTag
+                addTag(article_id);
+
+                console.log("addtag")
+                console.log(article_id)
+            });
+
     loadComments(article_id)
     loadTagsForArticle(article_id)
     addTag(article_id)
     getArticleData(article_id)
 
-    
-    
-    
-    
-    
     
 });
