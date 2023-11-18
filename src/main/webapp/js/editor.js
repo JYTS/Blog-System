@@ -507,7 +507,7 @@ function deleteComment(commentId,articleid) {
             contentParts.forEach((part, index) => 
             {   // 发送all是一共要发多少部分，index是块序号，由于异步不是顺序，需要index排序
                 const jsonData = {
-                    allnum:ALLNUM,
+                    all:ALLNUM,
                     index:index,
                     articleid: articleid,
                     title:title,

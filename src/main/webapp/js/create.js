@@ -225,47 +225,75 @@ function changeArticleData(username, articleid) {
     const title = titleTextarea.value;
     
     // 检查文本是否超过1500字符
-    if (content.length > 1500) {
-        // 分割文本
-        const maxLength = 1500;
-        const contentParts = [];
+    // 检查文本是否超过1500字符
+        if (content.length > 1500) {
+            // 分割文本
+            const maxLength = 1500;
+            const contentParts = [];
 
-        for (let i = 0; i < content.length; i += maxLength) {
-            const part = content.substr(i, maxLength);
-            contentParts.push(part);
-            
-        }
-        const tenum = Math.floor(content.length / maxLength);
-        const contentLength = content.length;
+            for (let i = 0; i < content.length; i += maxLength) {
+                const part = content.substr(i, maxLength);
+                contentParts.push(part);
+            }
+            const tenum = Math.floor(content.length / maxLength);
+            const contentLength = content.length;
 
-        // 判断是否有余数
-        const hasRemainder = contentLength % maxLength !== 0;
-        // 如果有余数，加1
-        const ALLNUM = hasRemainder ? tenum + 1 : tenum;
-        console.log(ALLNUM)
-        console.log(content.length);
-        console.log(maxLength);
+            // 判断是否有余数
+            const hasRemainder = contentLength % maxLength !== 0;
+            // 如果有余数，加1
+            const ALLNUM = hasRemainder ? tenum + 1 : tenum;
+            console.log(ALLNUM);
+            console.log(content.length);
+            console.log(maxLength);
 
-        var nu=0;
-    
-        // 逐个发送分割后的内容
-        contentParts.forEach((part, index) => 
-        {   // 发送all是一共要发多少部分，index是块序号，由于异步不是顺序，需要index排序
+            var nu = 0;
+
+            // 逐个发送分割后的内容
+            contentParts.forEach((part, index) => {
+                // 发送all是一共要发多少部分，index是块序号，由于异步不是顺序，需要index排序
+                const jsonData = {
+                    all: ALLNUM,
+                    index: index,
+                    articleid: articleid,
+                    title: title,
+                    content: part,
+                    author: username
+                };
+                console.log(jsonData);
+
+                // 延迟发送，每个部分之间间隔0.5秒
+                setTimeout(() => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://127.0.0.1:8080/Blog-System/blog/modify", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            nu = nu + 1;
+                            console.log(nu);
+                            if (nu === ALLNUM) {
+                                alert("保存成功");
+                            }
+                        } else {
+                            console.error(`保存数据时出错 - 部分 ${index + 1}:`, xhr.statusText);
+                        }
+                    };
+
+                    // 发送JSON数据到后端
+                    xhr.send(JSON.stringify(jsonData));
+                }, index * 500); // 间隔0.5秒
+            });
+        } else {
+            // 数据没有超过1500字符，直接发送
             const jsonData = {
-                allnum:ALLNUM,
-                index:index,
+                all: 1,
+                index: 0,
                 articleid: articleid,
-                title:title,
-                content: part,
+                title: title,
+                content: content,
                 author: username
             };
-            console.log(jsonData)
-
-
-            const content = jsonData.content; // 获取 content 属性的值
-            const contentLength = content.length; // 计算 content 的字数
-            
-            console.log("content 的字数：" + contentLength);
+            console.log(jsonData);
 
             // 创建XHR请求
             const xhr = new XMLHttpRequest();
@@ -274,52 +302,16 @@ function changeArticleData(username, articleid) {
 
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    // console.log(`数据已成功保存到后端 - 部分 ${index + 1}`);
-                    nu=nu+1
-                    console.log(nu)
-                    if(nu===ALLNUM)
-                    {
-                        alert("保存成功")
-                    }
-
-
+                    console.log("数据已成功保存到后端");
+                    alert('保存成功');
                 } else {
-                    console.error(`保存数据时出错 - 部分 ${index + 1}:`, xhr.statusText);
+                    console.error("保存数据时出错:", xhr.statusText);
                 }
             };
 
             // 发送JSON数据到后端
             xhr.send(JSON.stringify(jsonData));
-        });
-    } else {
-        // 数据没有超过1500字符，直接发送
-        const jsonData = {
-            all:1,
-            index:0,
-            articleid: articleid,
-            title:title,
-            content: content,
-            author: username
-        };
-        console.log(jsonData);
-
-        // 创建XHR请求
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://127.0.0.1:8080/Blog-System/blog/modify", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log("数据已成功保存到后端");
-                alert('保存成功');
-            } else {
-                console.error("保存数据时出错:", xhr.statusText);
-            }
-        };
-
-        // 发送JSON数据到后端
-        xhr.send(JSON.stringify(jsonData));
-    }
+        }
 }
 // ### 2 添加标签
 

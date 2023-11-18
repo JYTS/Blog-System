@@ -25,12 +25,9 @@ public class keyword extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String keyword = req.getParameter("searchtxt");
 
-        System.out.println("搜索字符串为: " + keyword);
-
         BlogDao blogDao = new BlogDao();
         try {
             List<Blog> blogs= blogDao.selectFromKeyword(keyword);
-            System.out.println(blogs.size());
             ObjectNode outputJson = JsonNodeFactory.instance.objectNode();
             ArrayNode arrayNode = outputJson.putArray("blogs");
             for (Blog blog : blogs) {

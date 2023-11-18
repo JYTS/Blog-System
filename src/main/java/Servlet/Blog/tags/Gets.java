@@ -24,7 +24,7 @@ public class Gets extends HttpServlet{
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("article_id"));
+        int id = Integer.parseInt(req.getParameter("id"));
 
         BlogDao blogDao = new BlogDao();
         TagDao tagDao = new TagDao();
@@ -43,7 +43,7 @@ public class Gets extends HttpServlet{
                 String respJson = objectMapper.writeValueAsString(outputJson);
                 resp.setContentType("application/json;charset=utf8");
                 resp.getWriter().write(respJson);
-                resp.sendError(403);
+                resp.setStatus(200);
             } else {
                 resp.sendError(403);
             }

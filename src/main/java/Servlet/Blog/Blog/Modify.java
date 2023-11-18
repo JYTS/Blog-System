@@ -65,6 +65,8 @@ public class Modify extends HttpServlet{
                     if (content_old.length() > (index + 1) * 1500) {
                         content_new += content_old.substring((index + 1) * 1500);
                     }
+                    if (content_new.length() > parts * 1500)
+                        content_new = content_new.substring(0, parts * 1500);
                     blog.setContent(content_new);
                 }
                 blogDao.update(blog);
