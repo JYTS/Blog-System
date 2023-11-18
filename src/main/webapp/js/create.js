@@ -449,10 +449,7 @@ myButton.addEventListener("click", function() {
         // 标题不为空，执行你需要的操作
         console.log("标题: " + titleValue);
         sendArticleData(titleValue, username) ;
-        
-
-
-        
+        sessionStorage.removeItem("indexid");
     }
 });
 
