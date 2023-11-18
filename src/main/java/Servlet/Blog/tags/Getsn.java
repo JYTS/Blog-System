@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet("/tag/getnTags")
 public class Getsn extends HttpServlet{
@@ -28,14 +30,18 @@ public class Getsn extends HttpServlet{
             List<Tag> tags = tagDao.selectAll();
             ObjectNode outputJson = JsonNodeFactory.instance.objectNode();
             ArrayNode arrayNode = outputJson.putArray("tags");
-            for (Tag tag : tags){
+            Set<String> unique = new HashSet<>();
+            for (Tag tag : tags) {
+                unique.add(tag.getName());
+            }
+            for (String tagName : unique) {
                 if (num > 0){
                     num--;
                 } else {
                     break;
                 }
                 ObjectNode json = JsonNodeFactory.instance.objectNode();
-                json.put("tag", tag.getName());
+                json.put("tag", tagName);
                 arrayNode.add(json);
             }
             String respJson = objectMapper.writeValueAsString(outputJson);

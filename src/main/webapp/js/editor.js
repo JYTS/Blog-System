@@ -311,8 +311,7 @@ function loadComments(articleId) {
                     // 添加点击事件处理程序
                     deleteText.addEventListener("click", function () {
                         // 在点击删除文本时执行删除评论的操作
-                        deleteComment(comment.comment_id);
-                        loadComments(articleId);
+                        deleteComment(comment.comment_id, articleId);
                     });
 
                     // 添加分割线
@@ -357,7 +356,7 @@ function loadComments(articleId) {
 // - 成功响应（200）
 
 // - 错误响应（101, 105）
-function deleteComment(commentId) {
+function deleteComment(commentId, articleID) {
     const xhr = new XMLHttpRequest();
 
 
