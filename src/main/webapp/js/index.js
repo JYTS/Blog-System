@@ -178,7 +178,7 @@ function requestArticleContent(articleID) {
                     readMoreButton.href = `blog-post.html?id=${data.id}`;
 
                     // 添加 "阅读更多" 链接
-                    if (data.content.length > maxContentLength) {
+                    if (data.content.length > 0) {
                         const expandContent = document.createElement("a");
 
                         expandContent.addEventListener('click', function () {
@@ -195,7 +195,7 @@ function requestArticleContent(articleID) {
                     articleBlock.appendChild(title);
                     articleBlock.appendChild(author);
                     articleBlock.appendChild(content);
-                    if (data.content.length > maxContentLength) {
+                    if (data.content.length > 0) {
                         articleBlock.appendChild(readMoreButton);
                     }
                     articleContainer.appendChild(articleBlock);
