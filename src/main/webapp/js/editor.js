@@ -470,23 +470,23 @@ function deleteComment(commentId) {
 // - 成功响应（200）
 
 // - 错误响应（101，104）
+function changeArticleData(username, articleid) {
+    // 获取文本框内容
+    const contentTextarea = document.getElementById("content");
+    const titleTextarea = document.getElementById("title");
+    const content = contentTextarea.value;
+    const title = titleTextarea.value;
 
-     function changeArticleData(username, articleid) {
-        // 获取文本框内容
-        const contentTextarea = document.getElementById("content");
-        const content = contentTextarea.value;
-        
-        // 检查文本是否超过1500字符
+    // 检查文本是否超过1500字符
+    // 检查文本是否超过1500字符
         if (content.length > 1500) {
             // 分割文本
             const maxLength = 1500;
-
             const contentParts = [];
 
             for (let i = 0; i < content.length; i += maxLength) {
                 const part = content.substr(i, maxLength);
                 contentParts.push(part);
-                
             }
             const tenum = Math.floor(content.length / maxLength);
             const contentLength = content.length;
@@ -495,67 +495,58 @@ function deleteComment(commentId) {
             const hasRemainder = contentLength % maxLength !== 0;
             // 如果有余数，加1
             const ALLNUM = hasRemainder ? tenum + 1 : tenum;
-            console.log(ALLNUM)
+            console.log(ALLNUM);
             console.log(content.length);
             console.log(maxLength);
 
-            var nu=0;
-        
+            var nu = 0;
+
             // 逐个发送分割后的内容
-            contentParts.forEach((part, index) => 
-            {   // 发送all是一共要发多少部分，index是块序号，由于异步不是顺序，需要index排序
+            contentParts.forEach((part, index) => {
+                // 发送all是一共要发多少部分，index是块序号，由于异步不是顺序，需要index排序
                 const jsonData = {
-                    all:ALLNUM,
-                    index:index,
+                    all: ALLNUM,
+                    index: index,
                     articleid: articleid,
-                    title:title,
+                    title: title,
                     content: part,
                     author: username
                 };
+                console.log(jsonData);
 
-                const content = jsonData.content; // 获取 content 属性的值
-                const contentLength = content.length; // 计算 content 的字数
-                
-                console.log("content 的字数：" + contentLength);
-                // 创建XHR请求
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", "http://127.0.0.1:8080/Blog-System/blog/modify", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
+                // 延迟发送，每个部分之间间隔0.5秒
+                setTimeout(() => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "http://127.0.0.1:8080/Blog-System/blog/modify", true);
+                    xhr.setRequestHeader("Content-Type", "application/json");
 
-                xhr.onload = function () 
-                {
-                    if (xhr.status === 200) {
-                    //     console.log(`数据已成功保存到后端 - 部分 ${index + 1}`);
-                        nu=nu+1
-                        console.log(nu)
-                        if(nu===ALLNUM)
-                        {
-                            alert("保存成功")
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            nu = nu + 1;
+                            console.log(nu);
+                            if (nu === ALLNUM) {
+                                alert("保存成功");
+                            }
+                        } else {
+                            console.error(`保存数据时出错 - 部分 ${index + 1}:`, xhr.statusText);
                         }
+                    };
 
-
-    
-                        
-                    } else {
-                        console.error(`保存数据时出错 - 部分 ${index + 1}:`, xhr.statusText);
-                        
-                    }
-                };
-
-
-                // 发送JSON数据到后端
-                xhr.send(JSON.stringify(jsonData));
+                    // 发送JSON数据到后端
+                    xhr.send(JSON.stringify(jsonData));
+                }, index * 500); // 间隔0.5秒
             });
         } else {
             // 数据没有超过1500字符，直接发送
             const jsonData = {
-                all:1,
-                index:0,
+                all: 1,
+                index: 0,
                 articleid: articleid,
-                title:title,
+                title: title,
                 content: content,
                 author: username
             };
+            console.log(jsonData);
 
             // 创建XHR请求
             const xhr = new XMLHttpRequest();
@@ -574,7 +565,7 @@ function deleteComment(commentId) {
             // 发送JSON数据到后端
             xhr.send(JSON.stringify(jsonData));
         }
-    }
+}
 
 
 
